@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   app: {
     baseURL: '/',
-    buildAssetsDir: '/todo-app/_nuxt/',
+    buildAssetsDir: '/_nuxt/',
   },
   nitro: {
     preset: 'static',
