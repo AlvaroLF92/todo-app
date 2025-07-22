@@ -119,6 +119,7 @@ import { useTodoStore } from "@/stores/todo";
 import { storeToRefs } from "pinia";
 import TodoItem from "./TodoItem.vue";
 import draggable from "vuedraggable";
+import type { Task } from "@/stores/todo";
 
 const todoStore = useTodoStore();
 const { tasks } = storeToRefs(todoStore);
@@ -173,10 +174,9 @@ function toggleAlphabetical() {
 }
 
 function onReorder(type: "pending" | "completed") {
-  const reordered =
-    type === "pending"
-      ? [...pendingTasks.value, ...completedTasks.value]
-      : [...pendingTasks.value, ...completedTasks.value];
+  // Cuando termina reordenar cualquier lista,
+  // guarda el orden unificado (pendientes + completados)
+  const reordered = [...pendingTasks.value, ...completedTasks.value];
   todoStore.setTasks(reordered);
 }
 
@@ -257,48 +257,50 @@ function handleDeleteCompletedTasks() {
   transition: background-color 0.2s ease;
 }
 
-.control-button-delete:active {
-  background-color: rgb(203, 43, 43);
-}
-
-.control-button:active {
-  background-color: #dbeafe;
-}
-
-button.active {
-  background-color: #4caf50;
+.control-button-delete:hover {
+  background-color: rgb(25, 23, 23);
   color: white;
-  width: 10rem;
+}
+
+.control-button:hover,
+.control-button-alf:hover {
+  background-color: #555;
+  color: white;
+}
+
+.control-button-alf.active {
+  background-color: #0978ff;
+  color: white;
 }
 
 .todo-lists {
   display: flex;
-  gap: 1rem;
   justify-content: center;
-}
-
-.todo-lists .task-advice {
-  text-align: center;
-  margin-top: 1rem;
-  font-style: italic;
-  color: #666;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  padding: 1rem;
+  max-width: 650px;
 }
 
 .list-column {
-  background-color: #f0f4f8;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  width: 33vw;
-  min-width: 16rem;
+  width: 300px;
 }
 
-@media (max-width: 720px) {
-  .todo-lists {
-    flex-direction: column;
-  }
+h2 {
+  text-align: center;
+  color: #111;
+  font-weight: 900;
+}
 
-  .list-column {
-    width: 90%;
-  }
+hr {
+  margin: 0.5rem 0 1rem 0;
+  border: none;
+  border-bottom: 2px solid #eee;
+}
+
+.task-advice {
+  font-size: 1rem;
+  color: #777;
+  text-align: center;
 }
 </style>

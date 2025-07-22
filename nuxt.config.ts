@@ -3,6 +3,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   compatibilityDate: '2024-11-01',
   app: {
-    baseURL: '/todo-app/',
-  }
+    baseURL: '/',
+    buildAssetsDir: '/todo-app/_nuxt/',
+  },
+  nitro: {
+    preset: 'static',
+  },
 })

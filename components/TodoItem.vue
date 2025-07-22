@@ -34,30 +34,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { defineProps } from "vue";
-import { useTodoStore } from "@/stores/todo";
+import { ref, defineProps, defineEmits } from "vue";
 import type { Task } from "@/stores/todo";
 
+const emit = defineEmits(['update-task', 'delete-task']);
 const props = defineProps<{ task: Task }>();
-const todoStore = useTodoStore();
 
 const isEditing = ref(false);
 const editableTitle = ref(props.task.title);
 
 function toggleTask() {
-  todoStore.toggleTask(props.task.id); 
+  emit('update-task', { id: props.task.id, completed: !props.task.completed });
 }
 
 function saveEdit() {
   if (editableTitle.value.trim() && editableTitle.value !== props.task.title) {
-    todoStore.updateTaskTitle(props.task.id, editableTitle.value.trim()); 
+    emit('update-task', { id: props.task.id, title: editableTitle.value.trim() });
   }
   isEditing.value = false;
 }
 
 function deleteTask() {
-  todoStore.deleteTask(props.task.id);
+  emit('delete-task', props.task.id);
 }
 
 function startEditing() {
@@ -72,14 +70,15 @@ function startEditing() {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  > span {
-    display: inline-block;
-    max-width: 8rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: wrap;
-    text-align: left;
-  }
+}
+
+.task-item > span {
+  display: inline-block;
+  max-width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
 }
 
 .edit-input {

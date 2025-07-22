@@ -22,7 +22,7 @@ const todoStore = useTodoStore();
 function handleAddTask() {
   if (!newTaskTitle.value.trim()) return;
   todoStore.addTask(newTaskTitle.value.trim());
-  newTaskTitle.value = "";  
+  newTaskTitle.value = "";
 }
 </script>
 

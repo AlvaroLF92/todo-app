@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "cp .nojekyll dist/.nojekyll && gh-pages -d dist"
+   "deploy": "cp .nojekyll .output/public/.nojekyll && gh-pages -d .output/public"
+
   },
   "dependencies": {
     "@pinia/nuxt": "^0.11.0",
